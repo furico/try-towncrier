@@ -1,0 +1,46 @@
+name: Update Changelog
+
+on: 
+  workflow_dispatch:
+    inputs:
+      bumpType:
+        description: 'bump upするバージョン(patch, minor, major)'
+        required: false
+        default: 'patch'
+
+jobs:
+  changelog:
+    name: Update Changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install towncrier
+        run: pip install towncrier
+
+      - name: Bump up tag version
+        uses: mathieudutour/github-tag-action@v6.0
+        id: tag_version
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: ${{ github.event.inputs.bumpType }}
+          dry_run: true
+
+      - name: Update Changelog
+        run: >-
+          towncrier build
+          --yes
+          --version
+          ${{ steps.tag_version.outputs.new_tag }}
+
+      - name: Push Changelog with tag
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update Changelog
+          tagging_message: ${{ steps.tag_version.outputs.new_tag }}
