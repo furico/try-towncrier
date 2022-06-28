@@ -1,0 +1,6 @@
+[tool.towncrier]
+name = "try-towncrier"
+version = ""
+filename = "CHANGELOG.rst"
+directory = "changelogs"
+issue_format = "`#{issue} <https://github.com/furico/try-towncrier/issues{issue}>`_"
