@@ -1,3 +1,12 @@
+try-towncrier v1.1.0 (2022-06-29)
+=================================
+
+Misc
+----
+
+- `#4 <https://github.com/furico/try-towncrier/issues4>`_
+
+
 try-towncrier v1.0.1 (2022-06-29)
 =================================
 
